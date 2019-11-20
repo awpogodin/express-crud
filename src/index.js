@@ -6,18 +6,24 @@ const controllers = require('./controllers');
 
 const PORT = 3000;
 
-const server = express();
+const app = express();
 
-server.set('view engine', 'ejs');
-server.set('views', path.resolve(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.set('views', path.resolve(__dirname, 'views'));
 
-server.use(express.static(path.resolve(__dirname, 'public')));
+app.use(express.static(path.resolve(__dirname, 'public')));
+app.use(
+  '/css',
+  express.static(
+    path.resolve(__dirname, '..', 'node_modules', 'bootstrap', 'dist', 'css')
+  )
+);
 
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(requestLogger);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(requestLogger);
 
-server.use(controllers);
+app.use(controllers);
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
