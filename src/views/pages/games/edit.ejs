@@ -1,0 +1,46 @@
+<%- include('../../fragments/header.ejs'); %>
+
+<div class="container mt-3">
+  <form method="POST">
+    <input
+      type="text"
+      name="name"
+      class="form-control"
+      placeholder="Enter name"
+      value="<%= game.name %>"
+      required
+    />
+    <br />
+    <input
+      type="text"
+      name="developers"
+      class="form-control"
+      placeholder="Enter developers"
+      value="<%= game.developers %>"
+      required
+    />
+    <br />
+    <input
+      type="text"
+      name="platforms"
+      class="form-control"
+      placeholder="Enter platforms"
+      value="<%= game.platforms %>"
+      required
+    />
+    <br />
+    <input
+      type="text"
+      name="genres"
+      class="form-control"
+      placeholder="Enter genres"
+      value="<%= game.genres %>"
+      required
+    />
+    <input type="hidden" name="oldName" value="<%= game.name %>">
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<%- include('../../fragments/footer.ejs'); %>

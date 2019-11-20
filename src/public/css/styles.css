@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400&display=swap&subset=cyrillic");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+
+.buttons-action {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-action {
+  display: block;
+  margin: 3px;
+}
