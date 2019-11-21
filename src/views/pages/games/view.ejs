@@ -24,13 +24,16 @@
         <td><%= game.platforms %></td>
         <td><%= game.genres %></td>
         <td class="buttons-action">
-          <form action="games/edit" method="post">
-            <input type="hidden" name="name" value="<%= game.name %>" />
-            <button class="btn btn-outline-warning btn-action" type="submit">Edit</button>
-          </form>
+          <a
+            class="btn btn-outline-danger btn-action"
+            href="/games/edit/<%= game.id %>"
+            >Edit</a
+          >
           <form action="games/del" method="post">
-            <input type="hidden" name="name" value="<%= game.name %>" />
-            <button class="btn btn-outline-danger btn-action" type="submit">Del</button>
+            <input type="hidden" name="id" value="<%= game.id %>" />
+            <button class="btn btn-outline-danger btn-action" type="submit">
+              Del
+            </button>
           </form>
         </td>
       </tr>
@@ -38,6 +41,4 @@
     </tbody>
   </table>
 </div>
-<% }; %> 
-
-<%- include('../../fragments/footer.ejs'); %>
+<% }; %> <%- include('../../fragments/footer.ejs'); %>

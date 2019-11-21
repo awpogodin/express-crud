@@ -18,20 +18,20 @@ router.post('/add', async (req, res) => {
 });
 
 router.post('/del', async (req, res) => {
-  await gamesRepository.delete(req.body.name);
+  await gamesRepository.delete(req.body.id);
   res.redirect('/games');
 });
 
-router.post('/edit', async (req, res) => {
-  if (req.body.oldName) {
-    await gamesRepository.delete(req.body.oldName);
-    await gamesRepository.add(req.body);
-    res.redirect('/games');
-  } else {
-    const currentGameName = req.body.name;
-    const game = await gamesRepository.find(currentGameName);
-    res.render('pages/games/edit', { game });
-  }
+router.get('/edit/:id', async (req, res) => {
+  const game = await gamesRepository.find(req.params.id);
+  res.render('pages/games/edit', { game });
+});
+
+router.post('/edit/:id', async (req, res) => {
+  const { oldId } = req.body;
+  await gamesRepository.delete(req.params.id);
+  await gamesRepository.add(req.body, oldId);
+  res.redirect('/games');
 });
 
 module.exports = router;

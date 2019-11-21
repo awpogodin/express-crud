@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 const path = require('path');
 const { readJsonFile, writeJsonFile } = require('../utils/file.utils');
 
@@ -9,7 +10,12 @@ const FILE_PATH = path.resolve(
 );
 
 class Game {
-  constructor(name, developers, platforms, genres) {
+  constructor(name, developers, platforms, genres, id = 0) {
+    if (id === 0) {
+      this.id = `f${(+new Date()).toString(16)}`;
+    } else {
+      this.id = id;
+    }
     this.name = name;
     this.developers = developers.split(',');
     this.platforms = platforms.split(',');
@@ -21,29 +27,38 @@ const gamesRepository = {
   async getAll() {
     return (await readJsonFile(FILE_PATH)) || [];
   },
-  async add(game) {
+  async add(game, oldId = 0) {
     const games = await this.getAll();
-    const content = new Game(
-      game.name,
-      game.developers,
-      game.platforms,
-      game.genres
-    );
-    games.push(content);
+    if (oldId === 0) {
+      const content = new Game(
+        game.name,
+        game.developers,
+        game.platforms,
+        game.genres
+      );
+      games.push(content);
+      await writeJsonFile(FILE_PATH, games);
+    } else {
+      const content = new Game(
+        game.name,
+        game.developers,
+        game.platforms,
+        game.genres,
+        oldId
+      );
+      games.push(content);
+      await writeJsonFile(FILE_PATH, games);
+    }
+  },
+  async find(id) {
+    const games = await this.getAll();
+    return games.find(item => item.id === id);
+  },
+  async delete(id) {
+    const games = await this.getAll();
+    const indexOfGame = games.findIndex(item => item.id === id);
+    games.splice(indexOfGame, 1);
     await writeJsonFile(FILE_PATH, games);
-  },
-  async find(name) {
-    const games = await this.getAll();
-    const indexOfGame = games.findIndex(item => item.name === name);
-    return games[indexOfGame];
-  },
-  async delete(name) {
-    const games = await this.getAll();
-    const indexOfGame = games.findIndex(item => item.name === name);
-    const copyGames = [];
-    copyGames.push(...games.slice(0, indexOfGame));
-    copyGames.push(...games.slice(indexOfGame + 1));
-    await writeJsonFile(FILE_PATH, copyGames);
   },
 };
 
