@@ -3,6 +3,22 @@ const gamesRepository = require('../repositories/games.repository');
 
 const router = new Router();
 
+function isValid(data) {
+  const { name, developers, platforms, genres } = data;
+  function validation(item) {
+    if (!item || item === '' || item.length < 2) {
+      return false;
+    }
+    return true;
+  }
+  return (
+    validation(name) &&
+    validation(developers) &&
+    validation(platforms) &&
+    validation(genres)
+  );
+}
+
 router.get('/', async (req, res) => {
   const games = await gamesRepository.getAll();
   res.render('pages/games/view', { games });
@@ -14,23 +30,7 @@ router.get('/add', (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-  let isNameValid = true;
-  let isDevelopersValid = true;
-  let isPlatformsValid = true;
-  let isGenresValid = true;
-  if (req.body.name === '') {
-    isNameValid = false;
-  }
-  if (req.body.developers === '') {
-    isDevelopersValid = false;
-  }
-  if (req.body.platforms === '') {
-    isPlatformsValid = false;
-  }
-  if (req.body.genres === '') {
-    isGenresValid = false;
-  }
-  if (isNameValid && isDevelopersValid && isPlatformsValid && isGenresValid) {
+  if (isValid(req.body)) {
     await gamesRepository.add(req.body);
     res.redirect('/games');
   } else {
@@ -51,23 +51,7 @@ router.get('/edit/:id', async (req, res) => {
 
 router.post('/edit/:id', async (req, res) => {
   const game = req.body;
-  let isNameValid = true;
-  let isDevelopersValid = true;
-  let isPlatformsValid = true;
-  let isGenresValid = true;
-  if (req.body.name === '') {
-    isNameValid = false;
-  }
-  if (req.body.developers === '') {
-    isDevelopersValid = false;
-  }
-  if (req.body.platforms === '') {
-    isPlatformsValid = false;
-  }
-  if (req.body.genres === '') {
-    isGenresValid = false;
-  }
-  if (isNameValid && isDevelopersValid && isPlatformsValid && isGenresValid) {
+  if (isValid(req.body)) {
     const { oldId } = req.body;
     await gamesRepository.delete(req.params.id);
     await gamesRepository.add(req.body, oldId);
