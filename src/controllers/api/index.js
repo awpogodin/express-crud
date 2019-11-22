@@ -3,6 +3,6 @@ const gamesController = require('./games.controller');
 
 const router = new Router();
 
-router.use('/users', gamesController);
+router.use('/games', gamesController);
 
 module.exports = router;
