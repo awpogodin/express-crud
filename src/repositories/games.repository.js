@@ -1,5 +1,6 @@
 /* eslint-disable no-bitwise */
 const path = require('path');
+const uuid = require('uuid/v1');
 const { readJsonFile, writeJsonFile } = require('../utils/file.utils');
 
 const FILE_PATH = path.resolve(
@@ -12,7 +13,7 @@ const FILE_PATH = path.resolve(
 class Game {
   constructor(name, developers, platforms, genres, id = 0) {
     if (id === 0) {
-      this.id = `f${(+new Date()).toString(16)}`;
+      this.id = uuid();
     } else {
       this.id = id;
     }
