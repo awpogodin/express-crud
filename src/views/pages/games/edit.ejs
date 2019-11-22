@@ -1,7 +1,12 @@
 <%- include('../../fragments/header.ejs'); %>
 
 <div class="container mt-3">
-  <form class="needs-validation" method="POST">
+  <% if (error.length > 0) { %>
+  <div class="alert alert-danger" role="alert">
+    <%= error %>
+  </div>
+  <% } %>
+  <form class="needs-validation" method="POST" novalidate>
     <input
       type="text"
       name="name"

@@ -9,12 +9,33 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/add', (req, res) => {
-  res.render('pages/games/add');
+  const error = '';
+  res.render('pages/games/add', { error });
 });
 
 router.post('/add', async (req, res) => {
-  await gamesRepository.add(req.body);
-  res.redirect('/games');
+  let isNameValid = true;
+  let isDevelopersValid = true;
+  let isPlatformsValid = true;
+  let isGenresValid = true;
+  if (req.body.name === '') {
+    isNameValid = false;
+  }
+  if (req.body.developers === '') {
+    isDevelopersValid = false;
+  }
+  if (req.body.platforms === '') {
+    isPlatformsValid = false;
+  }
+  if (req.body.genres === '') {
+    isGenresValid = false;
+  }
+  if (isNameValid && isDevelopersValid && isPlatformsValid && isGenresValid) {
+    await gamesRepository.add(req.body);
+    res.redirect('/games');
+  } else {
+    res.render('pages/games/add', { error: 'You have entered an empty field' });
+  }
 });
 
 router.post('/del', async (req, res) => {
@@ -23,15 +44,40 @@ router.post('/del', async (req, res) => {
 });
 
 router.get('/edit/:id', async (req, res) => {
+  const error = '';
   const game = await gamesRepository.get(req.params.id);
-  res.render('pages/games/edit', { game });
+  res.render('pages/games/edit', { game, error });
 });
 
 router.post('/edit/:id', async (req, res) => {
-  const { oldId } = req.body;
-  await gamesRepository.delete(req.params.id);
-  await gamesRepository.add(req.body, oldId);
-  res.redirect('/games');
+  const game = req.body;
+  let isNameValid = true;
+  let isDevelopersValid = true;
+  let isPlatformsValid = true;
+  let isGenresValid = true;
+  if (req.body.name === '') {
+    isNameValid = false;
+  }
+  if (req.body.developers === '') {
+    isDevelopersValid = false;
+  }
+  if (req.body.platforms === '') {
+    isPlatformsValid = false;
+  }
+  if (req.body.genres === '') {
+    isGenresValid = false;
+  }
+  if (isNameValid && isDevelopersValid && isPlatformsValid && isGenresValid) {
+    const { oldId } = req.body;
+    await gamesRepository.delete(req.params.id);
+    await gamesRepository.add(req.body, oldId);
+    res.redirect('/games');
+  } else {
+    res.render(`pages/games/edit`, {
+      game,
+      error: 'You have entered an empty field',
+    });
+  }
 });
 
 module.exports = router;

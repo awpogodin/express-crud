@@ -31,25 +31,26 @@ const gamesRepository = {
   async add(game, oldId = 0) {
     const games = await this.getAll();
     if (oldId === 0) {
-      const content = new Game(
+      const newGame = new Game(
         game.name,
         game.developers,
         game.platforms,
         game.genres
       );
-      games.push(content);
+      games.push(newGame);
       await writeJsonFile(FILE_PATH, games);
-    } else {
-      const content = new Game(
-        game.name,
-        game.developers,
-        game.platforms,
-        game.genres,
-        oldId
-      );
-      games.push(content);
-      await writeJsonFile(FILE_PATH, games);
+      return newGame;
     }
+    const updatedGame = new Game(
+      game.name,
+      game.developers,
+      game.platforms,
+      game.genres,
+      oldId
+    );
+    games.push(updatedGame);
+    await writeJsonFile(FILE_PATH, games);
+    return updatedGame;
   },
   async get(id) {
     const games = await this.getAll();
