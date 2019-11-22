@@ -23,7 +23,7 @@ router.post('/del', async (req, res) => {
 });
 
 router.get('/edit/:id', async (req, res) => {
-  const game = await gamesRepository.get(req.params.id);
+  const game = await gamesRepository.find(req.params.id);
   res.render('pages/games/edit', { game });
 });
 

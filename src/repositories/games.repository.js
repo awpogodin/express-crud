@@ -50,7 +50,7 @@ const gamesRepository = {
       await writeJsonFile(FILE_PATH, games);
     }
   },
-  async get(id) {
+  async find(id) {
     const games = await this.getAll();
     return games.find(item => item.id === id);
   },
