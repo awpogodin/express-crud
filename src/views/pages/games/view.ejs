@@ -25,14 +25,20 @@
         <td><%= game.genres %></td>
         <td class="buttons-action">
           <a
-            class="btn btn-outline-danger btn-action"
+            class="btn btn-outline-warning btn-action"
             href="/games/edit/<%= game.id %>"
             >Edit</a
+          >
+          <a
+            class="btn btn-outline-danger btn-action del-btn"
+            href="#"
+            data-id="<%= game.id %>"
+            >Del</a
           >
           <form action="games/del" method="post">
             <input type="hidden" name="id" value="<%= game.id %>" />
             <button class="btn btn-outline-danger btn-action" type="submit">
-              Del
+              D
             </button>
           </form>
         </td>
@@ -41,4 +47,6 @@
     </tbody>
   </table>
 </div>
+
+<script src="/js/games.js"></script>
 <% }; %> <%- include('../../fragments/footer.ejs'); %>

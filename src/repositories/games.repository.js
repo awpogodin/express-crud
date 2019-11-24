@@ -30,6 +30,7 @@ const gamesRepository = {
   },
   async add(game, oldId = 0) {
     const games = await this.getAll();
+    console.log(game);
     if (oldId === 0) {
       const newGame = new Game(
         game.name,

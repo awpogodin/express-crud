@@ -3,19 +3,20 @@ const gamesRepository = require('../repositories/games.repository');
 
 const router = new Router();
 
+function isFieldValid(item) {
+  if (!item || item === '' || item.length < 2) {
+    return false;
+  }
+  return true;
+}
+
 function isValid(data) {
   const { name, developers, platforms, genres } = data;
-  function validation(item) {
-    if (!item || item === '' || item.length < 2) {
-      return false;
-    }
-    return true;
-  }
   return (
-    validation(name) &&
-    validation(developers) &&
-    validation(platforms) &&
-    validation(genres)
+    isFieldValid(name) &&
+    isFieldValid(developers) &&
+    isFieldValid(platforms) &&
+    isFieldValid(genres)
   );
 }
 
