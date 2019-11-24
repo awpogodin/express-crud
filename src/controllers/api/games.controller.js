@@ -43,4 +43,14 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  const game = await gamesRepository.get(req.params.id);
+  if (game) {
+    await gamesRepository.delete(req.params.id);
+    res.json(game);
+    return;
+  }
+  res.status(404).end();
+});
+
 module.exports = router;
