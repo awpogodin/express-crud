@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "serve": "nodemon src/index.js"
+    "serve": "nodemon src/index.js",
+    "code:clean": "yarn code:lint && yarn code:format",
+    "code:lint": "eslint --ext .js,.jsx,.ts,.tsx \"src/\" --fix",
+    "code:format": "prettier './src/**/**.{js,jsx,ts,tsx}' --write",
+    "code:check:rules": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
   },
   "repository": {
     "type": "git",
@@ -30,6 +34,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "poetic": "^1.1.0"
   }
 }
