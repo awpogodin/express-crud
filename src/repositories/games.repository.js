@@ -3,24 +3,18 @@ const path = require('path');
 const uuid = require('uuid/v1');
 const { readJsonFile, writeJsonFile } = require('../utils/file.utils');
 
-const FILE_PATH = path.resolve(
-  path.dirname(require.main.filename),
-  '..',
-  'data',
-  'games.json'
-);
+const FILE_PATH = path.resolve(path.dirname(require.main.filename), '..', 'data', 'games.json');
 
 class Game {
-  constructor(name, developers, platforms, genres, id = 0) {
+  constructor(name, developer, platforms, id = 0) {
     if (id === 0) {
       this.id = uuid();
     } else {
       this.id = id;
     }
     this.name = name;
-    this.developers = developers.split(',');
+    this.developer = developer.split(',');
     this.platforms = platforms.split(',');
-    this.genres = genres.split(',');
   }
 }
 
@@ -32,23 +26,12 @@ const gamesRepository = {
     const games = await this.getAll();
     console.log(game);
     if (oldId === 0) {
-      const newGame = new Game(
-        game.name,
-        game.developers,
-        game.platforms,
-        game.genres
-      );
+      const newGame = new Game(game.name, game.developer, game.platforms);
       games.push(newGame);
       await writeJsonFile(FILE_PATH, games);
       return newGame;
     }
-    const updatedGame = new Game(
-      game.name,
-      game.developers,
-      game.platforms,
-      game.genres,
-      oldId
-    );
+    const updatedGame = new Game(game.name, game.developer, game.platforms, oldId);
     games.push(updatedGame);
     await writeJsonFile(FILE_PATH, games);
     return updatedGame;

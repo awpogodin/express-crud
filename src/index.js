@@ -14,11 +14,10 @@ app.set('views', path.resolve(__dirname, 'views'));
 app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(
   '/bootstrap',
-  express.static(
-    path.resolve(__dirname, '..', 'node_modules', 'bootstrap', 'dist')
-  )
+  express.static(path.resolve(__dirname, '..', 'node_modules', 'bootstrap', 'dist')),
 );
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 

@@ -10,9 +10,8 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Developers</th>
+        <th>Developer</th>
         <th>Platforms</th>
-        <th>Genres</th>
         <th>ACTIONS</th>
       </tr>
     </thead>
@@ -20,19 +19,11 @@
       <% games.forEach(game => { %>
       <tr>
         <td><%= game.name %></td>
-        <td><%= game.developers %></td>
+        <td><%= game.developer %></td>
         <td><%= game.platforms %></td>
-        <td><%= game.genres %></td>
         <td class="buttons-action">
-          <a
-            class="btn btn-outline-warning btn-action"
-            href="/games/edit/<%= game.id %>"
-            >Edit</a
-          >
-          <a
-            class="btn btn-outline-danger btn-action del-btn"
-            href="#"
-            data-id="<%= game.id %>"
+          <a class="btn btn-outline-warning btn-action" href="/games/edit/<%= game.id %>">Edit</a>
+          <a class="btn btn-outline-danger btn-action del-btn" href="#" data-id="<%= game.id %>"
             >Del</a
           >
         </td>

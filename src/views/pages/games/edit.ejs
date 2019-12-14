@@ -19,11 +19,11 @@
     <br />
     <input
       type="text"
-      name="developers"
+      name="developer"
       class="form-control"
-      placeholder="Enter developers"
+      placeholder="Enter developer"
       pattern="^[A-Z]{1}[A-Za-z]{1}[,a-z]{1}([A-Za-z]{0,1})?([a-z]{0,2})?([,a-z]{0,1})?([A-Za-z]{0,1})?([a-z]{0,6})?( [A-Z]{1})?([a-z]{4})?$"
-      value="<%= game.developers %>"
+      value="<%= game.developer %>"
       required
     />
     <br />
@@ -36,16 +36,6 @@
       value="<%= game.platforms %>"
       required
     />
-    <br />
-    <input
-      type="text"
-      name="genres"
-      class="form-control"
-      placeholder="Enter genres"
-      pattern="^[A-Z]{1}[A-Za-z]{1,2}([a-z]{0,3})?([,a-z]{0,1})?([a-z]{0,12})?( [A-Z]{1})?([a-z]{9})?$"
-      value="<%= game.genres %>"
-      required
-    />
     <input type="hidden" name="oldId" value="<%= game.id %>" />
     <br />
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -55,28 +45,28 @@
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
   (function() {
-    "use strict";
+    'use strict';
     window.addEventListener(
-      "load",
+      'load',
       function() {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName("needs-validation");
+        var forms = document.getElementsByClassName('needs-validation');
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function(form) {
           form.addEventListener(
-            "submit",
+            'submit',
             function(event) {
               if (form.checkValidity() === false) {
                 event.preventDefault();
                 event.stopPropagation();
               }
-              form.classList.add("was-validated");
+              form.classList.add('was-validated');
             },
-            false
+            false,
           );
         });
       },
-      false
+      false,
     );
   })();
 </script>
