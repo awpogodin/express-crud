@@ -13,7 +13,16 @@ function isValid({ name, developer, platforms }) {
 
 router.get('/', async (req, res) => {
   const games = await gamesRepository.getAll();
-  res.json(games);
+  if (req.query.name) {
+    const filteredGames = games.filter((game) => game.name === req.query.name);
+    if (filteredGames.length) {
+      res.json(filteredGames);
+    } else {
+      res.status(404).end();
+    }
+  } else {
+    res.json(games);
+  }
 });
 
 router.post('/', async (req, res) => {
