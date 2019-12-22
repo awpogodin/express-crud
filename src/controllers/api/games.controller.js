@@ -15,11 +15,7 @@ router.get('/', async (req, res) => {
   const games = await gamesRepository.getAll();
   if (req.query.name) {
     const filteredGames = games.filter((game) => game.name === req.query.name);
-    if (filteredGames.length) {
-      res.json(filteredGames);
-    } else {
-      res.status(404).end();
-    }
+    res.json(filteredGames);
   } else {
     res.json(games);
   }
