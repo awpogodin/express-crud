@@ -45,9 +45,7 @@ router.get('/edit/:id', async (req, res) => {
 router.post('/edit/:id', async (req, res) => {
   const game = req.body;
   if (isValid(req.body)) {
-    const { oldId } = req.body;
-    await gamesRepository.delete(req.params.id);
-    await gamesRepository.add(req.body, oldId);
+    await gamesRepository.update(req.params.id, req.body);
     res.redirect('/games');
   } else {
     res.render(`pages/games/edit`, {

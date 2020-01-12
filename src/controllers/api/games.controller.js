@@ -15,30 +15,28 @@ router.get('/', async (req, res) => {
   const games = await gamesRepository.getAll();
   if (req.query.name) {
     const filteredGames = games.filter((game) => game.name === req.query.name);
-    res.json(filteredGames);
+    return res.json(filteredGames);
   } else {
-    res.json(games);
+    return res.json(games);
   }
 });
 
 router.post('/', async (req, res) => {
-  console.log(req.body);
   if (isValid(req.body)) {
     const game = await gamesRepository.add(req.body);
-    res.status(201).json(game);
+    return res.status(201).json(game);
   } else {
-    res.status(404).end();
+    return res.status(404).end();
   }
 });
 
 router.get('/:id', async (req, res) => {
   const game = await gamesRepository.get(req.params.id);
   if (game) {
-    res.json(game);
-    return;
+    return res.json(game);
   }
 
-  res.status(404).end();
+  return res.status(404).end();
 });
 
 router.patch('/:id', async (req, res) => {
@@ -64,10 +62,8 @@ router.patch('/:id', async (req, res) => {
     } else {
       data.platforms = game.platforms.join();
     }
-    await gamesRepository.delete(req.params.id);
-    const updatedGame = await gamesRepository.add(data, req.params.id);
-    res.json(updatedGame);
-    return;
+    const updatedGame = await gamesRepository.update(req.params.id, data);
+    return res.json(updatedGame);
   }
 
   res.status(404).end();
@@ -77,8 +73,7 @@ router.delete('/:id', async (req, res) => {
   const game = await gamesRepository.get(req.params.id);
   if (game) {
     await gamesRepository.delete(req.params.id);
-    res.json(game);
-    return;
+    return res.json(game);
   }
   res.status(404).end();
 });
